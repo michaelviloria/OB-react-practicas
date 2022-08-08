@@ -31,7 +31,7 @@ const Ejemplo2 = () => {
 
 	/**
 	 * ? Caso 1: Ejecutar SIEMPRE un snippet de codigo
-	 * Cada vez qie haya un cambio en el estado del componente
+	 * Cada vez que haya un cambio en el estado del componente
 	 * se ejecuta aquello que este dentro del useEffect()
 	 */
 
