@@ -2,16 +2,35 @@ import React, { useState, useEffect } from "react";
 import { LEVELS } from "../../models/levels.enum";
 import { Task } from "../../models/task.class";
 import TaskComponent from "../pure/task";
+import TaskForm from "../pure/forms/TaskForm";
 
 const TaskListComponent = () => {
-	const defaultTask = new Task(
-		"Example",
-		"Default description",
+	const defaultTask1 = new Task(
+		"Example1",
+		"Default description1",
 		false,
 		LEVELS.NORMAL
 	);
 
-	const [tasks, setTasks] = useState(defaultTask);
+	const defaultTask2 = new Task(
+		"Example2",
+		"Default description2",
+		true,
+		LEVELS.URGENT
+	);
+
+	const defaultTask3 = new Task(
+		"Example3",
+		"Default description3",
+		false,
+		LEVELS.BLOCKING
+	);
+
+	const [tasks, setTasks] = useState([
+		defaultTask1,
+		defaultTask2,
+		defaultTask3,
+	]);
 	const [loading, setLoading] = useState(true);
 
 	// Control del ciclo de vida del componente
@@ -22,7 +41,7 @@ const TaskListComponent = () => {
 		return () => {
 			console.log("TaskList Component is going to Unmount...");
 		};
-	}, [task]);
+	}, [tasks]);
 
 	// const changeCompleted = (id) => {
 	// 	console.log(id);
@@ -30,11 +49,23 @@ const TaskListComponent = () => {
 
 	return (
 		<div>
-			<div>
-				<h1>Your Tasks:</h1>
-			</div>
-			{/* TODO: Aplicar un for/map para renderizar una lista */}
-			<TaskComponent task={defaultTask} />
+			<h1 className="my-4">Your Tasks:</h1>
+			<table className="table-auto min-w-min">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Descripcion</th>
+						<th>Level</th>
+						<th>Completed</th>
+					</tr>
+				</thead>
+				<tbody>
+					{tasks.map((task, index) => {
+						return <TaskComponent key={index} task={task} />;
+					})}
+				</tbody>
+			</table>
+			<TaskForm />
 		</div>
 	);
 };
