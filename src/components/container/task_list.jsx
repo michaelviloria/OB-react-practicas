@@ -43,29 +43,59 @@ const TaskListComponent = () => {
 		};
 	}, [tasks]);
 
-	// const changeCompleted = (id) => {
-	// 	console.log(id);
-	// };
+	function completeTask(task) {
+		console.log("Complete this task: ", task);
+		const index = tasks.indexOf(task);
+		const tempTask = [...tasks];
+		tempTask[index].completed = !tempTask[index].completed;
+		// We update the state of the component whit the new list of tasks and it will update the
+		// iteration of the tasks in order to show task updated
+		setTasks(tempTask);
+	}
+
+	function deleteTask(task) {
+		console.log("Delete this task: ", task);
+		const index = tasks.indexOf(task);
+		const tempTask = [...tasks];
+		tempTask[index].completed = !tempTask[index].completed;
+		tempTask.splice(index, 1);
+		setTasks(tempTask);
+	}
+
+	function addTask(task) {
+		console.log("Delete this task: ", task);
+		// const index = tasks.indexOf(task);
+		const tempTask = [...tasks];
+		tempTask.push(task);
+		setTasks(tempTask);
+	}
 
 	return (
-		<div>
+		<div className="p-5 bg-gray-100 border-2 border-gray-300 rounded-md max-w-max">
 			<h1 className="my-4">Your Tasks:</h1>
-			<table className="table-auto min-w-min">
+			<table className="w-full table-fixed">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th>Descripcion</th>
-						<th>Level</th>
-						<th>Completed</th>
+						<th className="px-1 pb-1 border-b-2">Nombre</th>
+						<th className="px-1 pb-1 border-b-2">Descripcion</th>
+						<th className="px-1 pb-1 border-b-2">Level</th>
+						<th className="px-1 pb-1 border-b-2">Completed</th>
 					</tr>
 				</thead>
 				<tbody>
 					{tasks.map((task, index) => {
-						return <TaskComponent key={index} task={task} />;
+						return (
+							<TaskComponent
+								key={index}
+								task={task}
+								complete={completeTask}
+								remove={deleteTask}
+							/>
+						);
 					})}
 				</tbody>
 			</table>
-			<TaskForm />
+			<TaskForm add={addTask} />
 		</div>
 	);
 };
